@@ -1,0 +1,1 @@
+Repository to play with GH Actions
