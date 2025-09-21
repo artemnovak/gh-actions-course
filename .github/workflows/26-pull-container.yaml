@@ -12,9 +12,9 @@ jobs:
     runs-on: self-hosted
     container:
       image: artemdefualtregistry.azurecr.io/azure-tools:latest
-      credentials:
-        username: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
-        password: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}
+    #   credentials:
+    #     username: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
+    #     password: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}
       options: --cpus 1
     steps:
       - name: Check container environment
