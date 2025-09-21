@@ -4,14 +4,14 @@ on:
   workflow_dispatch:
 
 env:
-  REGISTRY: myregistry.azurecr.io
+  REGISTRY: artemdefualtregistry.azurecr.io
   IMAGE_NAME: azure-tools
 
 jobs:
   container-test-job:
     runs-on: self-hosted
     container:
-      image: myregistry.azurecr.io/azure-tools:latest
+      image: artemdefualtregistry.azurecr.io/azure-tools:latest
       credentials:
         username: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
         password: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}
