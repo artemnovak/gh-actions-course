@@ -5,7 +5,6 @@ RUN apk update && apk add --no-cache \
     python3 \
     python3-dev \
     py3-pip \
-    py3-pipx \
     gcc \
     musl-dev \
     libffi-dev \
@@ -20,11 +19,13 @@ RUN apk update && apk add --no-cache \
     yq \
     build-base
 
-# Ensure pipx is in PATH
-ENV PATH="/root/.local/bin:$PATH"
+# Create virtual environment and install tools
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+RUN pip install --upgrade pip
 
-# Install Azure CLI via pipx
-RUN pipx install azure-cli
+# Install Azure CLI in venv
+RUN pip install azure-cli
 
 # Install Terraform
 ARG TERRAFORM_VERSION=1.6.6
@@ -33,8 +34,8 @@ RUN wget -q https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraf
     && mv terraform /usr/local/bin/ \
     && rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
-# Install Ansible via pipx
-RUN pipx install ansible
+# Install Ansible in venv
+RUN pip install ansible
 
 # Set working directory
 WORKDIR /workspace
