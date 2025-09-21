@@ -1,0 +1,33 @@
+name: 25 - Build Docker Container
+
+on: push
+
+env:
+  REGISTRY: artemdefualtregistry.azurecr.io
+  IMAGE_NAME: azure-tools
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Login to ACR
+      uses: azure/docker-login@v2
+      with:
+        login-server: ${{ env.REGISTRY }}
+        username: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
+        password: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}
+
+    - name: Build and push
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        push: true
+        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
