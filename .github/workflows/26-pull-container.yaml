@@ -1,0 +1,24 @@
+name: Quick Pull Test
+
+on:
+  workflow_dispatch:
+
+env:
+  REGISTRY: myregistry.azurecr.io
+  IMAGE_NAME: azure-tools
+
+jobs:
+  container-test-job:
+    runs-on: self-hosted
+    container:
+      image: myregistry.azurecr.io/azure-tools:latest
+      credentials:
+        username: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
+        password: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}
+      options: --cpus 1
+    steps:
+      - name: Check container environment
+        run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
+
+      - name: Test Azure CLI
+        run: az account show
