@@ -11,7 +11,7 @@ jobs:
   container-test-job:
     runs-on: self-hosted
     container:
-      image: artemdefualtregistry.azurecr.io/azure-tools:latest
+      image: devops-tools:latest
     #   credentials:
     #     username: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
     #     password: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}
