@@ -1,6 +1,11 @@
-name: 01 - Workflow Events
+name: 02 - Workflow Events
 
-on: push
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"
 
 jobs:
   echo:
