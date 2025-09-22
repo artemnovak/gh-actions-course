@@ -39,6 +39,25 @@ on:
         type: boolean
 
 jobs:
+  generating-config:
+    runs-on: self-hosted
+    container:
+      image: artemdefualtregistry.azurecr.io/azure-tools:latest
+      credentials:
+        username: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
+        password: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          ref: "main"
+          sparse-checkout: resources/config.json
+          sparse-checkout-cone-mode: false
+
+      - name: Generating json config
+        run: |
+          jq resources/config.json
+
   terraform-deploy:
     uses: ./.github/workflows/reusable_terraform.yaml
     with:

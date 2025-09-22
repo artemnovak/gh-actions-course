@@ -49,6 +49,7 @@ jobs:
 
   send_notification:
     runs-on: self-hosted
+    needs: called-ansible
     container:
       image: artemdefualtregistry.azurecr.io/azure-tools:latest
       credentials:

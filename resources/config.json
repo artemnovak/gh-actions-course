@@ -1,0 +1,71 @@
+[{
+  "id": 1,
+  "first_name": "Giordano",
+  "last_name": "Maybury",
+  "email": "gmaybury0@1688.com",
+  "gender": "Male",
+  "ip_address": "140.35.72.197"
+}, {
+  "id": 2,
+  "first_name": "Wilmer",
+  "last_name": "Torbet",
+  "email": "wtorbet1@behance.net",
+  "gender": "Male",
+  "ip_address": "89.48.217.72"
+}, {
+  "id": 3,
+  "first_name": "Beniamino",
+  "last_name": "Attaway",
+  "email": "battaway2@php.net",
+  "gender": "Male",
+  "ip_address": "241.143.33.89"
+}, {
+  "id": 4,
+  "first_name": "Marlee",
+  "last_name": "Jeffree",
+  "email": "mjeffree3@ox.ac.uk",
+  "gender": "Female",
+  "ip_address": "59.51.236.58"
+}, {
+  "id": 5,
+  "first_name": "Anthiathia",
+  "last_name": "Lantiff",
+  "email": "alantiff4@t-online.de",
+  "gender": "Female",
+  "ip_address": "122.175.220.138"
+}, {
+  "id": 6,
+  "first_name": "Lelah",
+  "last_name": "Rettie",
+  "email": "lrettie5@apple.com",
+  "gender": "Female",
+  "ip_address": "40.177.28.226"
+}, {
+  "id": 7,
+  "first_name": "Peggi",
+  "last_name": "Gresswood",
+  "email": "pgresswood6@gmpg.org",
+  "gender": "Female",
+  "ip_address": "184.193.32.62"
+}, {
+  "id": 8,
+  "first_name": "Sallee",
+  "last_name": "Lockie",
+  "email": "slockie7@upenn.edu",
+  "gender": "Female",
+  "ip_address": "127.150.177.200"
+}, {
+  "id": 9,
+  "first_name": "Alethea",
+  "last_name": "Dunthorn",
+  "email": "adunthorn8@princeton.edu",
+  "gender": "Female",
+  "ip_address": "185.64.110.213"
+}, {
+  "id": 10,
+  "first_name": "Abby",
+  "last_name": "Driffill",
+  "email": "adriffill9@istockphoto.com",
+  "gender": "Male",
+  "ip_address": "182.101.29.144"
+}]
