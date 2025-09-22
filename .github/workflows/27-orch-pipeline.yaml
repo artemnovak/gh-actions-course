@@ -58,7 +58,7 @@ jobs:
 
   db_patching:
     uses: ./.github/workflows/reusable_db_migration.yaml
-    needs: terraform-deploy
+    needs: ansible-configuration
     if: ${{ inputs.run_python == true }}
     with:
       organization: ${{ inputs.organization }}
