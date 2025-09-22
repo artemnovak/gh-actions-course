@@ -43,6 +43,8 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          clean: true
 
       - name: Scripting
         run: python config_db.py

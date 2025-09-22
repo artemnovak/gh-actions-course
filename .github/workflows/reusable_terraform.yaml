@@ -44,6 +44,8 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          clean: true
 
       - name: Terraform Init
         id: init
