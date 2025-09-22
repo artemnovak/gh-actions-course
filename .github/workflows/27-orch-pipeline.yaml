@@ -32,8 +32,32 @@ on:
         type: choice
         options: ["m", "l", "xl"]
 
-      run_python:
-        description: 'Run automated tests'
+      db_patching:
+        description: 'Setting up Oracle DB'
+        required: false
+        default: false
+        type: boolean
+
+      db_testing:
+        description: 'Testing DB configuration, connecting'
+        required: false
+        default: false
+        type: boolean
+
+      ap_provision:
+        description: 'Provisioning application'
+        required: false
+        default: false
+        type: boolean
+
+      ap_testing:
+        description: 'Application tests'
+        required: false
+        default: false
+        type: boolean
+
+      system_testing:
+        description: 'System tests'
         required: false
         default: false
         type: boolean
@@ -62,7 +86,6 @@ jobs:
           IP_ADDRESS=$(jq -r '.[0].ip_address' resources/config.json)
           echo "ip=$FIRST_IP" >> $GITHUB_OUTPUT
 
-
   terraform-deploy:
     uses: ./.github/workflows/reusable_terraform.yaml
     needs: generating-config
@@ -85,7 +108,47 @@ jobs:
   db_patching:
     uses: ./.github/workflows/reusable_db_migration.yaml
     needs: ansible-configuration
-    if: ${{ inputs.run_python == true }}
+    if: ${{ inputs.db_patching == true }}
+    with:
+      organization: ${{ inputs.organization }}
+      environment: ${{ inputs.environment }}
+      size: ${{ inputs.size }}
+    secrets: inherit
+
+  db_testing:
+    uses: ./.github/workflows/reusable_db_migration.yaml
+    needs: db_patching
+    if: ${{ inputs.db_testing == true }}
+    with:
+      organization: ${{ inputs.organization }}
+      environment: ${{ inputs.environment }}
+      size: ${{ inputs.size }}
+    secrets: inherit
+
+  app_provision:
+    uses: ./.github/workflows/reusable_db_migration.yaml
+    needs: db_testing
+    if: ${{ inputs.ap_provision == true }}
+    with:
+      organization: ${{ inputs.organization }}
+      environment: ${{ inputs.environment }}
+      size: ${{ inputs.size }}
+    secrets: inherit
+
+  app_testing:
+    uses: ./.github/workflows/reusable_db_migration.yaml
+    needs: app_provision
+    if: ${{ inputs.ap_testing == true }}
+    with:
+      organization: ${{ inputs.organization }}
+      environment: ${{ inputs.environment }}
+      size: ${{ inputs.size }}
+    secrets: inherit
+
+  system_testing:
+    uses: ./.github/workflows/reusable_db_migration.yaml
+    needs: app_provision
+    if: ${{ inputs.system_testing == true }}
     with:
       organization: ${{ inputs.organization }}
       environment: ${{ inputs.environment }}
