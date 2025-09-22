@@ -70,7 +70,7 @@ jobs:
       organization: ${{ inputs.organization }}
       environment: ${{ inputs.environment }}
       size: ${{ inputs.size }}
-      custom-info: ${{ needs.generating-config.outputs.ip }}
+      # custom-info: ${{ needs.generating-config.outputs.ip }}
     secrets: inherit
 
   ansible-configuration:
