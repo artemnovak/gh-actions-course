@@ -1,0 +1,57 @@
+name: Deploy Orchestrator
+
+run-name: 'Triggered by ${{ github.actor }} | Org: ${{ inputs.organization }} | Env: ${{ inputs.environment }} | Size: ${{ inputs.size }}'
+
+on:
+  workflow_dispatch:
+    inputs:
+      organization:
+        description: 'Select Organization'
+        required: true
+        default: 'acme-corp'
+        type: choice
+        options:
+          - acme-corp
+          - tech-solutions
+          - global-enterprises
+          - innovation-labs
+          - future-systems
+
+      environment:
+        description: 'Select Environment'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - stage
+          - prod
+
+      size:
+        description: 'Select Deployment Size'
+        required: true
+        default: 'm'
+        type: choice
+        options:
+          - s
+          - m
+          - l
+          - xl
+
+jobs:
+  terraform-deploy:
+    uses: ./.github/workflows/reusable_workflows/reusable_terraform.yaml
+    with:
+      organization: ${{ inputs.organization }}
+      environment: ${{ inputs.environment }}
+      size: ${{ inputs.size }}
+    secrets: inherit
+
+  ansible:
+    uses: ./.github/workflows/reusable_workflows/reusable_ansible.yaml
+    needs: terraform-deploy
+    with:
+      organization: ${{ inputs.organization }}
+      environment: ${{ inputs.environment }}
+      size: ${{ inputs.size }}
+    secrets: inherit

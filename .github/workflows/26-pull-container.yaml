@@ -1,4 +1,4 @@
-name: Quick Pull Test
+name: 26 - Pull Image
 
 on:
   workflow_dispatch:
@@ -11,10 +11,10 @@ jobs:
   container-test-job:
     runs-on: self-hosted
     container:
-      image: devops-tools:latest
-    #   credentials:
-    #     username: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
-    #     password: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}
+      image: artemdefualtregistry.azurecr.io/azure-tools:latest
+      credentials:
+        username: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
+        password: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}
       options: --cpus 1
     steps:
       - name: Check container environment
