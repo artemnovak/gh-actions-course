@@ -21,7 +21,7 @@ on:
         value: "anystring"
 
 jobs:
-  called-terraform:
+  called-db:
     runs-on: self-hosted
     container:
       image: artemdefualtregistry.azurecr.io/azure-tools:latest

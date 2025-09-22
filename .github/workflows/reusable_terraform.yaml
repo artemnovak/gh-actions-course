@@ -15,10 +15,10 @@ on:
         description: 'Deployment size'
         required: true
         type: string
-    outputs:
-      deployment-status:
-        description: 'Deployment status'
-        value: "anystring"
+      custom-info:
+        description:  "Any custom info"
+        type: string
+        required: false
 
 jobs:
   called-terraform:
@@ -32,6 +32,7 @@ jobs:
         ORGANIZATION: ${{ inputs.organization }}
         ENVIRONMENT: ${{ inputs.environment }}
         DEPLOYMENT_SIZE: ${{ inputs.size }}
+        CUSTOM_INFO: ${{ inputs.size }}
     steps:
       - name: Display deployment info
         run: |
@@ -59,3 +60,9 @@ jobs:
           cd terraform/
           terraform validate
           echo "✅ Terraform configuration is valid"
+
+      - name: Custom Info
+        id: anything
+        run: |
+          echo $CUSTOM_INFO
+

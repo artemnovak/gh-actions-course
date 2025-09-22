@@ -41,6 +41,8 @@ on:
 jobs:
   generating-config:
     runs-on: self-hosted
+    outputs:
+      ip: ${{ steps.generating_config.outputs.ip }}
     container:
       image: artemdefualtregistry.azurecr.io/azure-tools:latest
       credentials:
@@ -55,15 +57,19 @@ jobs:
           sparse-checkout-cone-mode: false
 
       - name: Generating json config
+        id: generating_config
         run: |
-          jq resources/config.json
+          IP_ADDRESS=$(jq -r '.[0].ip_address' resources/config.json)
+          echo "ip=$FIRST_IP" >> $GITHUB_OUTPUT
 
   terraform-deploy:
     uses: ./.github/workflows/reusable_terraform.yaml
+    needs: generating-config
     with:
       organization: ${{ inputs.organization }}
       environment: ${{ inputs.environment }}
       size: ${{ inputs.size }}
+      custom-info: ${{ needs.generating-config.outputs.ip }}
     secrets: inherit
 
   ansible-configuration:
