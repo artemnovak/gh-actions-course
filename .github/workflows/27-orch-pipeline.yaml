@@ -40,7 +40,7 @@ on:
 
 jobs:
   terraform-deploy:
-    uses: ./.github/workflows/reusable_workflows/reusable_terraform.yaml
+    uses: ./.github/workflows/reusable_terraform.yaml
     with:
       organization: ${{ inputs.organization }}
       environment: ${{ inputs.environment }}
@@ -48,7 +48,7 @@ jobs:
     secrets: inherit
 
   ansible:
-    uses: ./.github/workflows/reusable_workflows/reusable_ansible.yaml
+    uses: ./.github/workflows/reusable_ansible.yaml
     needs: terraform-deploy
     with:
       organization: ${{ inputs.organization }}
