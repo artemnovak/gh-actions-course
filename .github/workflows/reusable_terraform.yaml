@@ -1,0 +1,61 @@
+name: Reusable Terraform Deployment
+
+on:
+  workflow_call:
+    inputs:
+      organization:
+        description: 'Organization name'
+        required: true
+        type: string
+      environment:
+        description: 'Environment name'
+        required: true
+        type: string
+      size:
+        description: 'Deployment size'
+        required: true
+        type: string
+    outputs:
+      deployment-status:
+        description: 'Deployment status'
+        value: "anystring"
+
+jobs:
+  called-terraform:
+    runs-on: self-hosted
+    container:
+      image: artemdefualtregistry.azurecr.io/azure-tools:latest
+      credentials:
+        username: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
+        password: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}
+      env:
+        ORGANIZATION: ${{ inputs.organization }}
+        ENVIRONMENT: ${{ inputs.environment }}
+        DEPLOYMENT_SIZE: ${{ inputs.size }}
+    steps:
+      - name: Display deployment info
+        run: |
+          echo "🚀 Starting Terraform deployment..."
+          echo "Organization: $ORGANIZATION"
+          echo "Environment: $ENVIRONMENT"
+          echo "Size: $DEPLOYMENT_SIZE"
+          echo "Terraform Version: $(terraform version)"
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Terraform Init
+        id: init
+        run: |
+          echo "🔧 Initializing Terraform..."
+          cd terraform/
+          terraform init -backend-config="key=$ORGANIZATION/$ENVIRONMENT/terraform.tfstate"
+          echo "✅ Terraform initialized successfully"
+
+      - name: Terraform Validate
+        id: validate
+        run: |
+          echo "✅ Validating Terraform configuration..."
+          cd terraform/
+          terraform validate
+          echo "✅ Terraform configuration is valid"

@@ -16,7 +16,6 @@ on:
           - global-enterprises
           - innovation-labs
           - future-systems
-
       environment:
         description: 'Select Environment'
         required: true
@@ -26,17 +25,12 @@ on:
           - dev
           - stage
           - prod
-
       size:
         description: 'Select Deployment Size'
         required: true
         default: 'm'
         type: choice
-        options:
-          - s
-          - m
-          - l
-          - xl
+        options: ["m", "l", "xl"]
 
 jobs:
   terraform-deploy:
