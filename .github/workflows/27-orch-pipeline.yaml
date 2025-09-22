@@ -61,6 +61,9 @@ jobs:
         run: |
           IP_ADDRESS=$(jq -r '.[0].ip_address' resources/config.json)
           echo "ip=$FIRST_IP" >> $GITHUB_OUTPUT
+          if git config --type bool core.sparseCheckout; then
+            git sparse-checkout disable
+          fi
 
   terraform-deploy:
     uses: ./.github/workflows/reusable_terraform.yaml
