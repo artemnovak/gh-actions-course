@@ -1,4 +1,4 @@
-name: Reusable Ansible Deployment
+name: Reusable DB Deployment
 
 on:
   workflow_call:
@@ -21,7 +21,7 @@ on:
         value: "anystring"
 
 jobs:
-  called-ansible:
+  called-terraform:
     runs-on: self-hosted
     container:
       image: artemdefualtregistry.azurecr.io/azure-tools:latest
@@ -44,16 +44,5 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Ansible test
-        run: ansible --version
-
-  send_notification:
-    runs-on: self-hosted
-    container:
-      image: artemdefualtregistry.azurecr.io/azure-tools:latest
-      credentials:
-        username: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
-        password: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}
-    steps:
-      - name: Sending notification
-        run: echo "Notification"
+      - name: Scripting
+        run: python config_db.py

@@ -32,6 +32,12 @@ on:
         type: choice
         options: ["m", "l", "xl"]
 
+      run_python:
+        description: 'Run automated tests'
+        required: false
+        default: false
+        type: boolean
+
 jobs:
   terraform-deploy:
     uses: ./.github/workflows/reusable_terraform.yaml
@@ -41,9 +47,19 @@ jobs:
       size: ${{ inputs.size }}
     secrets: inherit
 
-  ansible:
+  ansible-configuration:
     uses: ./.github/workflows/reusable_ansible.yaml
     needs: terraform-deploy
+    with:
+      organization: ${{ inputs.organization }}
+      environment: ${{ inputs.environment }}
+      size: ${{ inputs.size }}
+    secrets: inherit
+
+  db_patching:
+    uses: ./.github/workflows/reusable_db_migration.yaml
+    needs: terraform-deploy
+    if: ${{ inputs.run_python == true }}
     with:
       organization: ${{ inputs.organization }}
       environment: ${{ inputs.environment }}
