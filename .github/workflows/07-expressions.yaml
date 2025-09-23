@@ -1,0 +1,26 @@
+name: 07 - Expressions
+
+on:
+  workflow_dispatch:
+    inputs:
+      debug:
+        description: 'Set to true to enable debug mode'
+        default: false
+        type: boolean
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "[Debug] Echo debug info"
+        if: ${{ inputs.debug == true }}
+        run: |
+          echo "Debug mode is enabled"
+          echo "Triggered by ${{ github.actor }}"
+          echo "Runner OS: ${{ runner.os }}"
+      - name: "[Debug] Echo debug when main"
+        if: ${{ inputs.debug == true }} && ${{ github.ref == 'refs/heads/main' }}
+        run: |
+          echo "I was triggered on main branch"
+      - name: "Always run this step"
+        run: echo "This step runs regardless of debug input"
