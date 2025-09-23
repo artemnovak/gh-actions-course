@@ -1,8 +1,7 @@
 name: 25 - Build Docker Container
 
 on:
-  push:
-    path: "Doc"
+  workflow_dispatch:
 
 env:
   REGISTRY: artemdefualtregistry.azurecr.io
