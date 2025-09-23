@@ -9,8 +9,8 @@ on:
         type: boolean
 
 env:
-  SAMPLE_ENV: vars.RANDOM || 'default_value'
-  SAMPLE_ENV2: vars.MY_VAR && "Positive" || "Negative"
+  SAMPLE_ENV: ${{ vars.RANDOM || 'default_value' }}
+  SAMPLE_ENV2: ${{ vars.MY_VAR && 'Positive' || 'Negative' }}
 
 jobs:
   echo:
