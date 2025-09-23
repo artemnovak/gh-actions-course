@@ -1,0 +1,13 @@
+name: 05 - 1 - Filters and Activity Types
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    branches: [main, develop]
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo event name
+        run: echo "The event name is ${{ github.event_name }}"
