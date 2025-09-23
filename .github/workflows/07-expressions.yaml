@@ -10,6 +10,7 @@ on:
 
 env:
   SAMPLE_ENV: vars.RANDOM || 'default_value'
+  SAMPLE_ENV2: vars.MY_VAR && "Positive" || "Negative"
 
 jobs:
   echo:
@@ -26,4 +27,7 @@ jobs:
         run: |
           echo "I was triggered on main branch"
       - name: "Always run this step"
-        run: echo "This step runs regardless of $SAMPLE_ENV value"
+        run: |
+          echo "This step runs regardless of $SAMPLE_ENV value"
+          echo "SAMPLE_ENV is set to: $SAMPLE_ENV"
+          echo "SAMPLE_ENV2 is set to: $SAMPLE_ENV2"
