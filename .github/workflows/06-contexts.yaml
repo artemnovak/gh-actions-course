@@ -29,3 +29,7 @@ jobs:
           echo "GraphQL URL: ${{ github.graphql_url }}"
       - name: Retrieve variable
         run: echo "Variable value is ${{ vars.MY_VAR }}"
+      - name: Print Env Variable
+        env:
+          MY_ENV_VAR: HelloWorld
+        run: echo "The value of MY_ENV_VAR is $MY_ENV_VAR"
