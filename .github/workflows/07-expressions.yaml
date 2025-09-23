@@ -19,7 +19,7 @@ jobs:
           echo "Triggered by ${{ github.actor }}"
           echo "Runner OS: ${{ runner.os }}"
       - name: "[Debug] Echo debug when main"
-        if: ${{ inputs.debug == true }} && ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ inputs.debug == true && github.ref == 'refs/heads/main' }}
         run: |
           echo "I was triggered on main branch"
       - name: "Always run this step"
