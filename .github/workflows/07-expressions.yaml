@@ -8,6 +8,9 @@ on:
         default: false
         type: boolean
 
+env:
+  SAMPLE_ENV: vars.RANDOM || 'default_value'
+
 jobs:
   echo:
     runs-on: ubuntu-latest
@@ -23,4 +26,4 @@ jobs:
         run: |
           echo "I was triggered on main branch"
       - name: "Always run this step"
-        run: echo "This step runs regardless of debug input"
+        run: echo "This step runs regardless of $SAMPLE_ENV value"
