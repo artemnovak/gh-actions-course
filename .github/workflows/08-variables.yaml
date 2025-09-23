@@ -1,0 +1,27 @@
+name: 08 - Using Variables
+
+on:
+  workflow_dispatch:
+
+env:
+  GLOBAL_VAR: "I am a global variable"
+  global_var_lower: "I am another global variable"
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    env:
+      JOB_VAR: "I am a job variable"
+      job_var_lower: "I am another job variable"
+    steps:
+      - name: Print Env Variable
+        env:
+          STEP_VAR: "I am a step variable"
+          step_var_lower: "I am another step variable"
+        run: |
+          echo "Variable: $STEP_VAR"
+          echo "Variable2: ${{ env.step_var_lower }}"
+          echo "Job Variable: ${{ env.JOB_VAR }}"
+          echo "Job Variable2: ${{ env.job_var_lower }}"
+          echo "Global Variable: ${{ env.GLOBAL_VAR }}"
+          echo "Global Variable2: ${{ env.global_var_lower }}"
