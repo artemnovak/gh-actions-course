@@ -42,8 +42,14 @@ jobs:
         run: |
           echo "E2E tests failed!"
           exit 1
+  load-tests:
+    needs: deploy-non-prod
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Load Tests
+        run: echo "Running Load Tests..."
   deploy-prod:
-    needs: [e2e-tests, deploy-non-prod]
+    needs: [e2e-tests, deploy-non-prod, load-tests]
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to Production
