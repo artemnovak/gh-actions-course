@@ -7,6 +7,15 @@ on:
         description: 'Set to true to use cache'
         default: true
         type: boolean
+      node-version:
+        description: 'Node.js version to use'
+        required: true
+        default: '22'
+        type: choice
+        options:
+          - '18'
+          - '20'
+          - '22'
 
 jobs:
   build:
@@ -21,7 +30,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: '20.x'
+          node-version: ${{ github.event.inputs['node-version'] }}
 
       - name: Install Dependencies
         run: npm ci
