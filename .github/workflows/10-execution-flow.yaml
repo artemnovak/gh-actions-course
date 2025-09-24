@@ -19,7 +19,6 @@ jobs:
       - name: Lint and Build
         run: echo "Linting and Building..."
   unit-tests:
-    needs: lint-build
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs['pass-unit-tests'] == 'true' }}
     steps:
