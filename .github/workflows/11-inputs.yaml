@@ -29,7 +29,7 @@ jobs:
     steps:
       - name: Build Step
         run: |
-          echo "Building the project from tag ${{ github.event.inputs.version }}
+          echo "Building the project from tag ${{ github.event.inputs.version }}"
   deploy:
     needs: build
     runs-on: ubuntu-latest
