@@ -1,4 +1,4 @@
-name: 14 - Working with Artifacts
+name: 14 - Working with Artifacts!
 
 on:
   workflow_dispatch:
@@ -53,4 +53,4 @@ jobs:
           name: ${{ env.build-artifact-key }}
           path: build
       - name: Show folder structure
-        run: ls -R
+        run: ls -laR
