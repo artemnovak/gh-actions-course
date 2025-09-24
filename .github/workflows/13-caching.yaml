@@ -32,7 +32,18 @@ jobs:
         with:
           node-version: ${{ github.event.inputs['node-version'] }}
 
+      - name: Download cache
+        if: ${{ github.event.inputs['use-cache'] }}
+        id: cache
+        uses: actions/cache@v3
+        with:
+          key: deps-node-modules-${{ hashFiles('04-using-actions/react-app/package-lock.json') }}
+          path: 04-using-actions/react-app/node_modules
+          restore-keys: |
+            deps-node-modules-
+
       - name: Install Dependencies
+        if: ${{ github.event.inputs['use-cache'] && steps.cache.outputs.cache-hit != 'true' }}
         run: npm ci
 
       - name: Testing
