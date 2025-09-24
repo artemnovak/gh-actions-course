@@ -1,0 +1,27 @@
+name: 12 - Working with Outputs
+
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.build.outputs.mykey }}
+    steps:
+      - name: Build Step
+        id: build
+        run: echo "mykey=myvalue" >> "$GITHUB_OUTPUT"
+      - name: Check
+        run: echo "$GITHUB_OUTPUT"
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Step
+        run: |
+          echo "Deploying with output from build step: ${{ needs.build.outputs.result }}"
+      - name: Another Deploy Step
+        if: ${{ needs.build.outputs.result == 'myvalue' }}
+        run: echo "This step runs because the output matched the condition."
