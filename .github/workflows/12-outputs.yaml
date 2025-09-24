@@ -13,7 +13,8 @@ jobs:
         id: build
         run: echo "mykey=myvalue" >> "$GITHUB_OUTPUT"
       - name: Check
-        run: echo "$GITHUB_OUTPUT"
+        run: |
+          echo "$GITHUB_OUTPUT"
   deploy:
     needs: build
     runs-on: ubuntu-latest
