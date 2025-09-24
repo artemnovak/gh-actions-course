@@ -1,0 +1,45 @@
+name: 11 - Working with Inputs
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        type: boolean
+        description: 'Set to true to perform a dry run'
+        required: false
+        default: false
+      target:
+        type: environment
+        description: 'Deployment target environment'
+        required: true
+        default: 'staging'
+      version:
+        type: choice
+        description: 'Select the version to deploy'
+        required: true
+        options:
+          - v1.0
+          - v1.1
+          - v2.0
+        default: v1.0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Step
+        run: |
+          echo "Building the project from tag ${{ github.event.inputs.version }}
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.target }}
+    steps:
+      - name: Deploy Step
+        if: ${{ !github.event.inputs['dry-run'] }}
+        run: |
+          echo "Deploying to ${{ github.event.inputs.target }} environment, version ${{ github.event.inputs.version }}"
+      - name: Dry Run Notice
+        if: ${{ github.event.inputs['dry-run'] }}
+        run: |
+          echo "Dry run enabled. No deployment will be performed."
