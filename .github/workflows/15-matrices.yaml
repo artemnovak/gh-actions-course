@@ -1,0 +1,23 @@
+name:  15 - Working with Matrices
+
+on:
+  workflow_dispatch:
+
+jobs:
+  comp:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix['node-version'] }}
+      - name: Show OS and Node version
+        run: |
+          echo "OS: ${{ matrix['os'] }}"
+          node --version
