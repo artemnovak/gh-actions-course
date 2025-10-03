@@ -24,6 +24,7 @@ jobs:
 
   echo2:
     runs-on: ubuntu-latest
+    needs: echo
     environment: ${{ inputs.target-env == 'prod' && 'dev' || 'prod' }}
     env:
       myvar: ${{ vars.MY_VAR || 'default-value' }}
@@ -43,6 +44,15 @@ jobs:
   echo4:
     runs-on: ubuntu-latest
     needs: echo3
+    environment: prod
+    steps:
+      - name: Show environment
+        run: | 
+          echo "Again to dev"
+
+  echo5:
+    runs-on: ubuntu-latest
+    needs: echo2
     environment: prod
     steps:
       - name: Show environment
