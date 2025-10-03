@@ -21,3 +21,13 @@ jobs:
       - name: Show environment
         run: | 
           echo "Deploying to environment: ${{ env.myvar }}"
+
+  echo2:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.target-env == 'prod' && 'dev' || 'prod' }}
+    env:
+      myvar: ${{ vars.MY_VAR || 'default-value' }}
+    steps:
+      - name: Show environment
+        run: | 
+          echo "Deploying to environment: ${{ env.myvar }}"
