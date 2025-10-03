@@ -31,3 +31,18 @@ jobs:
       - name: Show environment
         run: | 
           echo "Deploying to environment: ${{ env.myvar }}"
+
+  echo3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show environment
+        run: | 
+          echo "Not deploying to any environment"
+
+  echo4:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - name: Show environment
+        run: | 
+          echo "Again to dev"
